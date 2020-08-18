@@ -1,46 +1,88 @@
 import React,{Component} from 'react';
-import {Navbar, Nav, Form, FormControl, Button,Container,Dropdown} from 'react-bootstrap';
-import './Navbar.css';
+import {Navbar, Nav, Form, FormControl, Button,Dropdown,NavDropdown} from 'react-bootstrap';
+
+import {connect} from 'react-redux';
+import {searchMovie,fetchMovies} from '../actions/searchAction';
 
 class Navigationbar extends Component {
 
     constructor() {
     super();
-    this.state = {dropdownVal: 'movies'};
-    }
-
-    componentDidMount() {
-
+    this.state = {dropdownVal: 'Movies'};
     }
 
     UpdateDropDown = (value) =>{
         this.setState({ dropdownVal: value});
     }
 
-     render(){
-     return(
-    <Navbar bg="primary">
-    <Navbar.Brand href="#home">MovieSearcher</Navbar.Brand>
-    <Nav className="mr-auto">
-    <Form inline>
-      <FormControl type="text" placeholder="Search" className="searchbar" />
-      <Dropdown>
-        <Dropdown.Toggle  id="dropdown-basic">
-        { this.state.dropdownVal }
-        </Dropdown.Toggle>
+    onChange = e => {
+      this.props.searchMovie(e.target.value);
+    }
 
-         <Dropdown.Menu>
-            <Dropdown.Item onClick={(e)=>this.UpdateDropDown('Movies')}>Movies</Dropdown.Item>
-            <Dropdown.Item onClick={(e)=>this.UpdateDropDown('Series')}>Series</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-      <Button variant="outline-light">Search</Button>
-    </Form>
-    </Nav>
-  </Navbar>
-     );
+    onSubmit = e => {
+    e.preventDefault();
+    this.props.fetchMovies(this.props.text);
+    this.props.setLoading();
+  };
+
+     render(){
+      return(
+       
+        <div className="background">
+          <form className="flexbox" id="searchForm" onSubmit={this.onSubmit}>
+            <p className="para">MOVIESEARCHER </p>
+            <input
+              type="text"
+              className="form-control"
+              name="searchText"
+              placeholder="Search Movies, TV Series ..."
+              onChange={this.onChange}
+            />
+            <select className="dropdown">
+            <option value="Movies">Movies</option>
+            <option value="Series">Series</option>
+            </select>
+            <button type="submit" className="btn btn-primary ">
+              Search
+            </button>
+          </form>
+          <style>{`
+          
+          .flexbox{
+            display:flex;
+            flex-direction: row;
+
+          }
+
+          .para{
+            margin:10px;
+            left:auto;
+            font-weight:bold;
+
+          }
+          .background{
+            background:#D3D3D3;
+            margin-left:5px;
+            margin-right:5px;
+          }
+
+          .dropdown{
+            margin:10px
+          }
+          .btn{
+            margin:5px;
+            background:#A9A9A9;
+          }
+            
+          `}</style>
+        </div>
+      );
      }
 
 }
+
+const mapStateToProps = state => ({
+  text: state.movies.text
+});
  
-export default Navigationbar;
+export default connect(mapStateToProps,{searchMovie})(Navigationbar);
