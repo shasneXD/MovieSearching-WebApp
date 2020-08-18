@@ -2,7 +2,7 @@
   "name": "movie-searching-app",
   "version": "0.1.0",
   "private": true,
-  "homepgae": "http://github.io/snehasharma0707/MovieSearching-WebApp",
+  "homepgae": "https://snehasharma0707.github.io/MovieSearching-WebApp/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
