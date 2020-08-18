@@ -1,10 +1,25 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-class MainPage extends Component {
-    render(){
-        return(
-            <p>MAIN PAGE</p>
-        );
-    }
+import { connect } from 'react-redux';
+
+import Navigationbar from './Navigationbar';
+import MoviesContainer from './MoviesContainer';
+import Welcome from './Welcome'
+
+export class MainPage extends Component {
+  render() {
+    const { loading } = this.props;
+    return (
+      <div >
+        <Navigationbar />
+        {loading ?<Welcome /> : <MoviesContainer />}
+      </div>
+    );
+  }
 }
-export default MainPage;
+
+const mapStateToProps = state => ({
+  loading: state.movies.loading
+});
+
+export default connect(mapStateToProps)(MainPage);

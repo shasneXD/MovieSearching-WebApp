@@ -1,19 +1,12 @@
 import React,{Component} from 'react';
-import {Navbar, Nav, Form, FormControl, Button,Dropdown,NavDropdown} from 'react-bootstrap';
 
 import {connect} from 'react-redux';
-import {searchMovie,fetchMovies} from '../actions/searchAction';
+import {
+  searchMovie,
+  fetchMovies,
+  setLoading} from '../actions/searchAction';
 
-class Navigationbar extends Component {
-
-    constructor() {
-    super();
-    this.state = {dropdownVal: 'Movies'};
-    }
-
-    UpdateDropDown = (value) =>{
-        this.setState({ dropdownVal: value});
-    }
+export class Navigationbar extends Component {
 
     onChange = e => {
       this.props.searchMovie(e.target.value);
@@ -22,6 +15,7 @@ class Navigationbar extends Component {
     onSubmit = e => {
     e.preventDefault();
     this.props.fetchMovies(this.props.text);
+    console.log(this.props.text)
     this.props.setLoading();
   };
 
@@ -29,7 +23,8 @@ class Navigationbar extends Component {
       return(
        
         <div className="background">
-          <form className="flexbox" id="searchForm" onSubmit={this.onSubmit}>
+          <form className="flexbox" id="searchForm" 
+          onSubmit={this.onSubmit}>
             <p className="para">MOVIESEARCHER </p>
             <input
               type="text"
@@ -85,4 +80,7 @@ const mapStateToProps = state => ({
   text: state.movies.text
 });
  
-export default connect(mapStateToProps,{searchMovie})(Navigationbar);
+export default connect(
+  mapStateToProps,
+  {searchMovie, fetchMovies, setLoading}
+  )(Navigationbar);
