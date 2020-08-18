@@ -51,14 +51,13 @@ export class Navigationbar extends Component {
 
           .para{
             margin:10px;
-            left:auto;
             font-weight:bold;
 
           }
           .background{
             background:#D3D3D3;
-            margin-left:5px;
-            margin-right:5px;
+            margin:8px;
+            
           }
 
           .dropdown{
